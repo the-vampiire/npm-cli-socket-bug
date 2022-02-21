@@ -9,7 +9,7 @@ attempt_builds() {
   dockerfile="$2"
   tag="$3"
 
-  echo "running 20 build attempts of Dockerfile [$dockerfile] [$tag] on host [$(uname)]"
+  echo "running [$build_count] build attempts of Dockerfile [$dockerfile] [$tag] on host [$(uname)]"
 
   for build_attempt in {0..$build_count}; do
     echo "build attempt: [${build_attempt}]"
@@ -21,10 +21,10 @@ attempt_builds() {
 }
 
 run() {
-
-  attempt_builds Dockerfile.upgrade "$base_tag:upgrade-8.5.1"
-  # attempt_builds Dockerfile.downgrade "$base_tag:downgrade-8.3"
-  # attempt_builds Dockerfile "$base_tag:no-8.3"
+  build_count="${1:-20}"
+  attempt_builds $build_count Dockerfile.upgrade "$base_tag:upgrade-8.5.1"
+  # attempt_builds $build_count Dockerfile.downgrade "$base_tag:downgrade-8.3"
+  # attempt_builds $build_count Dockerfile "$base_tag:no-8.3"
 }
 
-run
+run "$@"
