@@ -11,7 +11,7 @@ attempt_builds() {
 
   echo "running [$build_count] build attempts of Dockerfile [$dockerfile] [$tag] on host [$(uname)]"
 
-  for build_attempt in {0..$build_count}; do
+  for build_attempt in  $(seq 1 $build_count); do
     echo "build attempt: [${build_attempt}]"
     docker build --no-cache -t "$tag" -f "$dockerfile" . 1> /dev/null
     echo "build attempt: [${build_attempt}] completed without failure"
